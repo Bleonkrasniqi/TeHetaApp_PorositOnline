@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vullkanizer Te Heta</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome CDN -->
+<script src="https://kit.fontawesome.com/a2e0f1f9b2.js" crossorigin="anonymous"></script>
+<!-- EmailJS SDK latest version -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<style>
+    body {
+  background: #0a2540; /* Kaltër e errët */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Dizajn i lehtë me vija diagonale transparente */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.05) 2px,
+      transparent 2px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.05) 2px,
+      transparent 2px,
+      transparent 10px
+    );
+  z-index: 0;
+}
+
+header {
+  position: relative;
+  z-index: 10;
+}
+
+
+
+  .logo-round {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #facc15;
+    box-shadow: 0 0 15px #facc1580;
+    transition: transform 0.3s ease;
+  }
+  .logo-round img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .logo-round:hover {
+    transform: scale(1.1);
+  }
+  .modal-bg {
+    background: rgba(0,0,0,0.85);
+  }
+</style>
+
+<script>
+  window.onload = function() {
+    emailjs.init("YFpjT3nBir7TzJAvj"); // Public Key
+  }
+</script>
+
+</head>
+<body class="flex flex-col min-h-screen">
+
+<header class="flex items-center justify-between px-6 py-4 sticky top-0 bg-gray-900 z-50 shadow-lg">
+  <a href="#home" class="flex items-center space-x-4 select-none">
+    <div class="logo-round">
+      <img src="https://i.ibb.co/JjZXdqvB/TeHeta.jpg" alt="TeHeta Logo" />
+    </div>
+    <span class="text-yellow-400 text-2xl font-extrabold tracking-wide">Te Heta</span>
+  </a>
+  <nav>
+    <ul class="flex gap-8 text-gray-300 font-semibold">
+      <li><a href="#home" class="hover:text-yellow-400 transition">Ballina</a></li>
+      <li><a href="#sherbimet" class="hover:text-yellow-400 transition">Shërbimet</a></li>
+      <li><button onclick="openOrderModal()" class="hover:text-yellow-400 transition font-semibold">Bëj Porosi Tani</button></li>
+      <li><a href="#kontakt" class="hover:text-yellow-400 transition">Kontakt</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="flex-grow bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-gray-200 px-6 py-12 max-w-7xl mx-auto">
+
+  <section id="home" class="text-center max-w-4xl mx-auto mb-16">
+    <h1 class="text-5xl font-extrabold mb-6 text-yellow-400">Mirë se vini në <span class="text-white">Te Heta</span></h1>
+    <p class="mb-8 text-lg max-w-xl mx-auto">Shërbim profesional për goma dhe vullkanizim me cilësi të lartë.</p>
+    <button onclick="openOrderModal()" class="bg-yellow-400 text-gray-900 font-semibold px-8 py-3 rounded-full hover:bg-yellow-300 transition shadow-lg">Bëj Porosi Tani</button>
+  </section>
+
+  <section id="sherbimet" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- Goma Verore -->
+    <div class="bg-gray-800 rounded-xl p-8 shadow-lg hover:scale-105 transition transform cursor-pointer" onclick="openBrandModal('verore')">
+      <i class="fas fa-tire fa-4x text-yellow-400 mb-4"></i>
+      <h3 class="text-2xl font-semibold mb-2">Goma Verore</h3>
+      <p>Ndërrim dhe shitje të gomave verore të markave më të njohura.</p>
+      <button onclick="openBrandModal('verore'); event.stopPropagation();" class="mt-4 bg-yellow-400 text-gray-900 px-6 py-2 rounded hover:bg-yellow-300 transition font-semibold">Shto në Shportë</button>
+    </div>
+
+    <!-- Goma Dimrore -->
+    <div class="bg-gray-800 rounded-xl p-8 shadow-lg hover:scale-105 transition transform cursor-pointer" onclick="openBrandModal('dimrore')">
+      <i class="fas fa-snowflake fa-4x text-yellow-400 mb-4"></i>
+      <h3 class="text-2xl font-semibold mb-2">Goma Dimërore</h3>
+      <p>Goma dimërore të cilësisë së lartë për siguri maksimale.</p>
+      <button onclick="openBrandModal('dimrore'); event.stopPropagation();" class="mt-4 bg-yellow-400 text-gray-900 px-6 py-2 rounded hover:bg-yellow-300 transition font-semibold">Shto në Shportë</button>
+    </div>
+
+  </section>
+
+  <section id="kontakt" class="max-w-4xl mx-auto py-16 text-center">
+    <h2 class="text-4xl font-bold text-yellow-400 mb-8">Na Kontaktoni</h2>
+    <div class="flex flex-col md:flex-row justify-center gap-6">
+      <a href="tel:+38349500138" class="bg-yellow-400 text-gray-900 rounded-full px-6 py-3 flex items-center justify-center gap-3 font-semibold hover:bg-yellow-300 transition">
+        <i class="fas fa-phone-alt text-xl"></i> +383 49 500 138
+      </a>
+      <a href="viber://chat?number=%2B38349500138" class="bg-purple-700 text-white rounded-full px-6 py-3 flex items-center justify-center gap-3 font-semibold hover:bg-purple-600 transition">
+        <i class="fab fa-viber text-xl"></i> Viber
+      </a>
+      <a href="https://wa.me/38349500138" class="bg-green-600 text-white rounded-full px-6 py-3 flex items-center justify-center gap-3 font-semibold hover:bg-green-500 transition">
+        <i class="fab fa-whatsapp text-xl"></i> WhatsApp
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- Modal për zgjedhje brendi dhe madhësie -->
+<div id="brandModal" class="fixed inset-0 hidden modal-bg items-center justify-center z-50">
+  <div class="bg-gray-900 rounded-xl p-8 w-11/12 max-w-md shadow-lg border border-yellow-400 relative">
+    <button onclick="closeBrandModal()" class="absolute top-3 right-4 text-yellow-400 text-3xl font-bold hover:text-yellow-200">&times;</button>
+    <h2 id="brandModalTitle" class="text-yellow-400 text-2xl font-bold mb-6 text-center">Zgjedh Brendin dhe Madhësinë</h2>
+
+    <label for="tireBrand" class="block mb-2 font-semibold text-yellow-300">Brendi</label>
+    <select id="tireBrand" class="w-full p-3 mb-6 rounded bg-gray-800 text-yellow-400 font-semibold">
+      <option value="">Zgjidh brendin...</option>
+      <option value="Grenlander">Grenlander</option>
+      <option value="Suny">Suny</option>
+      <option value="Winrun">Winrun</option>
+      <option value="Continental">Continental</option>
+    </select>
+
+    <label for="tireSize" class="block mb-2 font-semibold text-yellow-300">Përmasa (p.sh. 225/55/16)</label>
+    <input id="tireSize" type="text" placeholder="Shkruaj përmasën" class="w-full mb-6 p-3 rounded bg-gray-800 text-yellow-400 font-semibold" />
+
+    <button onclick="addBrandToCart()" class="w-full bg-yellow-400 text-gray-900 font-semibold py-3 rounded hover:bg-yellow-300 transition">Shto në Shportë</button>
+  </div>
+</div>
+
+<!-- Modal Porosi -->
+<div id="orderModal" class="fixed inset-0 hidden modal-bg items-center justify-center z-50">
+  <div class="bg-gray-900 rounded-xl p-8 w-11/12 max-w-md shadow-lg border border-yellow-400 relative max-h-[90vh] overflow-auto">
+    <button onclick="closeOrderModal()" class="absolute top-3 right-4 text-yellow-400 text-3xl font-bold hover:text-yellow-200">&times;</button>
+    <h2 class="text-yellow-400 text-3xl font-bold mb-6 text-center">Porosia Juaj</h2>
+    <form id="orderForm" class="space-y-4 text-yellow-300">
+      <label>
+        Emri dhe Mbiemri
+        <input type="text" name="name" class="w-full p-3 rounded bg-gray-800 text-yellow-400 font-semibold" required />
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" class="w-full p-3 rounded bg-gray-800 text-yellow-400 font-semibold" required />
+      </label>
+      <label>
+        Numri i Telefonit
+        <input type="tel" name="phone" class="w-full p-3 rounded bg-gray-800 text-yellow-400 font-semibold" required pattern="[+0-9\s\-]+" placeholder="+383 49 500 138" />
+      </label>
+      <label>
+        Porosia (produkte & madhësi)
+        <textarea name="html_message" readonly rows="6" class="w-full p-3 rounded bg-gray-800 text-yellow-400 font-semibold resize-none"></textarea>
+      </label>
+      <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-semibold py-3 rounded hover:bg-yellow-300 transition">Dërgo Porosin</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  let cartItems = [];
+  let selectedTireType = '';
+
+  function openBrandModal(tireType) {
+    selectedTireType = tireType;
+    const title = tireType === 'verore' ? 'Goma Verore' : 'Goma Dimërore';
+    document.getElementById('brandModalTitle').textContent = `Zgjedh Brendin dhe Madhësinë për ${title}`;
+    document.getElementById('tireBrand').value = '';
+    document.getElementById('tireSize').value = '';
+    document.getElementById('brandModal').classList.remove('hidden');
+    document.getElementById('brandModal').classList.add('flex');
+  }
+
+  function closeBrandModal() {
+    document.getElementById('brandModal').classList.add('hidden');
+    document.getElementById('brandModal').classList.remove('flex');
+  }
+
+  function addBrandToCart() {
+    const brand = document.getElementById('tireBrand').value.trim();
+    const size = document.getElementById('tireSize').value.trim();
+
+    if (!brand || !size) {
+      alert('Ju lutemi zgjidhni brendin dhe shkruani përmasën!');
+      return;
+    }
+
+    cartItems.push({
+      type: selectedTireType === 'verore' ? 'Goma Verore' : 'Goma Dimërore',
+      brand,
+      size
+    });
+
+    alert(`U shtua në shportë: ${brand} ${size} (${selectedTireType === 'verore' ? 'Goma Verore' : 'Goma Dimërore'})`);
+    closeBrandModal();
+  }
+
+  function openOrderModal() {
+    if (cartItems.length === 0) {
+      alert('Ju lutemi shtoni së paku një gomë në shportë përpara se të bëni porosinë.');
+      return;
+    }
+
+    const orderText = cartItems.map(item => `${item.type}: ${item.brand} - ${item.size}`).join('\n');
+    document.querySelector('#orderForm textarea[name="html_message"]').value = orderText;
+
+    document.getElementById('orderModal').classList.remove('hidden');
+    document.getElementById('orderModal').classList.add('flex');
+  }
+
+  function closeOrderModal() {
+    document.getElementById('orderModal').classList.add('hidden');
+    document.getElementById('orderModal').classList.remove('flex');
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const phone = form.phone.value.trim();
+    const message = form.html_message.value.trim();
+
+    if (!name || !email || !phone || !message) {
+      alert('Ju lutemi plotësoni të gjitha fushat!');
+      return;
+    }
+
+    const serviceID = 'service_lwozgzg';
+    const templateID = 'template_4kuwwou';
+    const publicKey = 'YFpjT3nBir7TzJAvj';
+
+    const templateParams = {
+      name: name,
+      email: email,
+      phone: phone,
+      html_message: message.replace(/\n/g, '<br>')
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, publicKey)
+      .then(() => {
+        alert('Porosia u dërgua me sukses! Ju faleminderit.');
+        form.reset();
+        cartItems = [];
+        closeOrderModal();
+      })
+      .catch(err => {
+        console.error('Gabim gjatë dërgimit të porosisë:', err);
+        alert('Gabim gjatë dërgimit të porosisë. Ju lutem provoni përsëri.');
+      });
+  });
+</script>
+
+</body>
+</html>
